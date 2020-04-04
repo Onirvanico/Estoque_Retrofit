@@ -19,7 +19,7 @@ public class EstoqueRetrofit {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.72:8081/")
+                .baseUrl("http://192.168.1.8:8081/")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
