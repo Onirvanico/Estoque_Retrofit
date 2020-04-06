@@ -124,6 +124,37 @@ public class ProdutoRepository {
                 .execute();
     }
 
+    public void remove(Produto produtoEscolhido, DadosCarregadosCallback<Void> callback) {
+
+        removeNaApi(produtoEscolhido, callback);
+
+    }
+
+    private void removeNaApi(Produto produtoEscolhido, DadosCarregadosCallback<Void> callback) {
+        Call<Void> call = produtoService.remove(produtoEscolhido.getId());
+        call.enqueue(
+                new BaseCallback<>(new BaseCallback.RespostaCallback<Void>() {
+                    @Override
+                    public void quandoSucesso(Void resposta) {
+                        removeInterno(produtoEscolhido, callback);
+                    }
+
+                    @Override
+                    public void quandoFalha(String erro) {
+                        callback.quandoFalha(erro);
+                    }
+                })
+        );
+    }
+
+    private void removeInterno(Produto produtoEscolhido, DadosCarregadosCallback<Void> callback) {
+        new BaseAsyncTask<>(() -> {
+            dao.remove(produtoEscolhido);
+            return null;
+        }, callback::quandoSucesso)
+                .execute();
+    }
+
 
     public interface DadosCarregadosCallback<T> {
         void quandoSucesso(T resultado);
