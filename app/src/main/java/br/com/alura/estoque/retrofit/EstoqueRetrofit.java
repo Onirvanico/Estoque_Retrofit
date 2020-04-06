@@ -1,5 +1,6 @@
 package br.com.alura.estoque.retrofit;
 
+import br.com.alura.estoque.retrofit.service.ProdutoService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

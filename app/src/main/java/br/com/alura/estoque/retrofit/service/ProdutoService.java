@@ -1,4 +1,4 @@
-package br.com.alura.estoque.retrofit;
+package br.com.alura.estoque.retrofit.service;
 
 import java.util.List;
 
