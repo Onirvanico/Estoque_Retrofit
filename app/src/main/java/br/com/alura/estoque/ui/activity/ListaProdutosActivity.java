@@ -94,17 +94,8 @@ public class ListaProdutosActivity extends AppCompatActivity {
 
     private void abreFormularioEditaProduto(int posicao, Produto produto) {
         new EditaProdutoDialog(this, produto,
-                produtoEditado -> edita(posicao, produtoEditado))
+                produtoEditado -> repository.edita(posicao, produtoEditado))
                 .mostra();
-    }
-
-    private void edita(int posicao, Produto produto) {
-        new BaseAsyncTask<>(() -> {
-            dao.atualiza(produto);
-            return produto;
-        }, produtoEditado ->
-                adapter.edita(posicao, produtoEditado))
-                .execute();
     }
 
 

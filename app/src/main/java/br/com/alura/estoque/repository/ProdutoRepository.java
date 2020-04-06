@@ -11,9 +11,6 @@ import br.com.alura.estoque.retrofit.EstoqueRetrofit;
 import br.com.alura.estoque.retrofit.basecallback.BaseCallback;
 import br.com.alura.estoque.retrofit.service.ProdutoService;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.internal.EverythingIsNonNull;
 
 public class ProdutoRepository {
 
@@ -56,25 +53,6 @@ public class ProdutoRepository {
                     }
                 })
                );
-               /* new Callback<List<Produto>>() {
-                    @Override
-                    public void onResponse(Call<List<Produto>> call, Response<List<Produto>> response) {
-                        if(response.isSuccessful()) {
-                            List<Produto> produtosCarregados = response.body();
-                            if(produtosCarregados != null) {
-                                atualizaInterno(produtosCarregados, callback);
-                            }
-                        } else {
-                            callback.quandoFalha("Resposta não sucedida");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Produto>> call, Throwable t) {
-                        callback.quandoFalha("Falha na comunicação");
-                    }
-                }*/
-
     }
 
     private void atualizaInterno(List<Produto> produtosCarregados, DadosCarregadosCallback<List<Produto>> callback) {
@@ -113,6 +91,14 @@ public class ProdutoRepository {
             return dao.buscaProduto(id);
         }, callBack::quandoSucesso
         ).execute();
+    }
+
+    public void edita(int posicao, Produto produto, DadosCarregadosCallback<Produto> callback) {
+        new BaseAsyncTask<>(() -> {
+            dao.atualiza(produto);
+            return produto;
+        }, callback::quandoSucesso)
+                .execute();
     }
 
 
