@@ -94,7 +94,18 @@ public class ListaProdutosActivity extends AppCompatActivity {
 
     private void abreFormularioEditaProduto(int posicao, Produto produto) {
         new EditaProdutoDialog(this, produto,
-                produtoEditado -> repository.edita(posicao, produtoEditado))
+                produtoCriado -> repository.edita(produtoCriado, new ProdutoRepository.DadosCarregadosCallback<Produto>() {
+                    @Override
+                    public void quandoSucesso(Produto resultado) {
+                        adapter.edita(posicao, resultado);
+                    }
+
+                    @Override
+                    public void quandoFalha(String erro) {
+                        Toast.makeText(ListaProdutosActivity.this,
+                                "Não foi possível alterar o produto", Toast.LENGTH_SHORT).show();
+                    }
+                }))
                 .mostra();
     }
 
